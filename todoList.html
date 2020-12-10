@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>To do list</title>
+  </head>
+  <body>
+    <script>
+      var todos = ['Item1', 'Item2', 'Item3'];
+
+      function displayTodos(){
+        console.log('My Todos:', todos);
+      }
+
+      function addTodo(todo){
+        todos.push(todo);
+        console.log(todos);
+      }
+      function changeTodo(position, newValue) {
+        todos[position] = newValue;
+        console.log(todos);
+      }
+      function deleteTodo(position) {
+        todos.splice(position, 1);
+        console.log(todos);
+      }
+
+
+    </script>
+  </body>
+</html>
