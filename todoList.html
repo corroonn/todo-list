@@ -6,25 +6,46 @@
   </head>
   <body>
     <script>
-      var todos = ['Item1', 'Item2', 'Item3'];
 
-      function displayTodos(){
-        console.log('My Todos:', todos);
+      var todos = [
+        {todoText: 'Item 1', completed: false},
+        {todoText: 'Item 2', completed: false},
+        {todoText: 'Item 3', completed: false}
+      ];
+
+      displayTodos();
+
+      function add(initialTodoText){
+        todos.push({todoText: initialTodoText, completed: false});
+        displayTodos();
       }
 
-      function addTodo(todo){
-        todos.push(todo);
-        console.log(todos);
+      function edit(position, newTodoText) {
+        todos[position].todoText = newTodoText;
+        displayTodos();
       }
-      function changeTodo(position, newValue) {
-        todos[position] = newValue;
-        console.log(todos);
-      }
+
       function deleteTodo(position) {
         todos.splice(position, 1);
-        console.log(todos);
+        displayTodos();
       }
 
+      function toggle(position){
+        if (todos[position].completed === false) {
+          todos[position].completed = true;
+        }
+        else {
+          todos[position].completed = false;
+        }
+        displayTodos();
+      }
+
+      function displayTodos() {
+        for (var i = 0; i < todos.length; i++) {
+          console.log(todos[i])
+        }
+      }
+      
 
     </script>
   </body>
