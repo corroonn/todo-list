@@ -5,6 +5,11 @@
     <title>To do list</title>
   </head>
   <body>
+
+    <button id="display-todos-button">Display todos</button>
+    <button id="toggle-all-button">Toggle all</button>
+
+
     <script>
 
       var todos = [
@@ -12,8 +17,6 @@
         {todoText: 'Item 2', completed: false},
         {todoText: 'Item 3', completed: false}
       ];
-
-      displayTodos();
 
       function add(initialTodoText){
         todos.push({todoText: initialTodoText, completed: false});
@@ -45,7 +48,34 @@
           console.log(todos[i])
         }
       }
-      
+
+      function toggleAll() {
+
+        var completedTodos = 0;
+
+        for (var i = 0; i < todos.length; i++){
+          if (todos[i].completed === true) {
+            completedTodos++;
+          }
+        }
+        if (completedTodos === todos.length){
+          for (var i = 0; i < todos.length; i++){
+            todos[i].completed = false;
+          }
+        }
+        else {
+          for (var i = 0; i < todos.length; i++){
+            todos[i].completed = true;
+          }
+        }
+      }
+
+      var displayTodosButton = document.getElementById('display-todos-button');
+      displayTodosButton.addEventListener('click', displayTodos);
+
+      var toggleAllButton = document.getElementById('toggle-all-button');
+      toggleAllButton.addEventListener('click', toggleAll);
+
 
     </script>
   </body>
