@@ -8,6 +8,13 @@
 
     <button id="display-todos-button">Display todos</button>
     <button id="toggle-all-button">Toggle all</button>
+    <button id="add-button">Add todo</button>
+    <input id="add-input">
+    <button id="edit-button">Edit</button>
+    <input id="edit-position-input">
+    <input id="edit-text-input">
+    <button id="remove-button">Remove</button>
+    <button id="toggle-button">Toggle</button>
 
 
     <script>
@@ -18,28 +25,38 @@
         {todoText: 'Item 3', completed: false}
       ];
 
-      function add(initialTodoText){
+      function add(){
+        var initialTodoText = addInput.value;
         todos.push({todoText: initialTodoText, completed: false});
+        addInput.value = '';
         displayTodos();
       }
 
-      function edit(position, newTodoText) {
+      function edit() {
+        var position = editPositionInput.value;
+        var newTodoText = editTextInput.value;
         todos[position].todoText = newTodoText;
+        editPositionInput.value = '';
+        editTextInput.value = '';
         displayTodos();
       }
 
-      function deleteTodo(position) {
+      function remove() {
+        var position = editPositionInput.value;
         todos.splice(position, 1);
+        editPositionInput.value = '';
         displayTodos();
       }
 
-      function toggle(position){
+      function toggle(){
+        var position = editPositionInput.value;
         if (todos[position].completed === false) {
           todos[position].completed = true;
         }
         else {
           todos[position].completed = false;
         }
+        editPositionInput.value = '';
         displayTodos();
       }
 
@@ -75,6 +92,23 @@
 
       var toggleAllButton = document.getElementById('toggle-all-button');
       toggleAllButton.addEventListener('click', toggleAll);
+
+      var addButton = document.getElementById('add-button');
+
+      var addInput = document.getElementById('add-input');
+      addButton.addEventListener('click', add);
+
+      var editPositionInput = document.getElementById('edit-position-input');
+      var editTextInput = document.getElementById('edit-text-input');
+
+      var editButton = document.getElementById('edit-button');
+      editButton.addEventListener('click', edit);
+
+      var removeButton = document.getElementById('remove-button');
+      removeButton.addEventListener('click', remove);
+
+      var toggleButton = document.getElementById('toggle-button');
+      toggleButton.addEventListener('click', toggle);
 
 
     </script>
