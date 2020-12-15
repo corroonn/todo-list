@@ -6,15 +6,18 @@
   </head>
   <body>
 
-    <button id="display-todos-button">Display todos</button>
     <button id="toggle-all-button">Toggle all</button>
     <button id="add-button">Add todo</button>
     <input id="add-input">
     <button id="edit-button">Edit</button>
     <input id="edit-position-input">
     <input id="edit-text-input">
-    <button id="remove-button">Remove</button>
     <button id="toggle-button">Toggle</button>
+    <input id="toggle-position-input">
+
+
+    <ul id="todos-ul">
+    </ul>
 
 
     <script>
@@ -24,6 +27,8 @@
         {todoText: 'Item 2', completed: false},
         {todoText: 'Item 3', completed: false}
       ];
+
+      displayTodos();
 
       function add(){
         var initialTodoText = addInput.value;
@@ -41,28 +46,50 @@
         displayTodos();
       }
 
-      function remove() {
-        var position = editPositionInput.value;
-        todos.splice(position, 1);
-        editPositionInput.value = '';
-        displayTodos();
+
+
+      function remove(event) {
+          var position = event.target.id;
+          todos.splice(position, 1);
+          displayTodos();
       }
 
       function toggle(){
-        var position = editPositionInput.value;
+        var position = togglePositionInput.value;
         if (todos[position].completed === false) {
           todos[position].completed = true;
         }
         else {
           todos[position].completed = false;
         }
-        editPositionInput.value = '';
+        togglePositionInput.value = '';
         displayTodos();
       }
 
       function displayTodos() {
+        var todoListUl = document.getElementById('todos-ul');
+        
+        todoListUl.innerHTML = '';
+
         for (var i = 0; i < todos.length; i++) {
-          console.log(todos[i])
+          var todoLi = document.createElement('li');
+          var completedStatus = '[X]';
+          if (todos[i].completed === true) {
+            completedStatus = '[X] ';
+          }
+          else {
+            completedStatus = '[ ] ';
+          }
+
+          var removeButton = document.createElement('button');
+          removeButton.innerText = 'Remove';
+
+          todoLi.innerHTML = completedStatus + todos[i].todoText;
+          todoListUl.appendChild(todoLi);
+          todoLi.appendChild(removeButton);
+          
+          removeButton.addEventListener('click', remove);
+          removeButton.id = i;
         }
       }
 
@@ -85,10 +112,8 @@
             todos[i].completed = true;
           }
         }
+        displayTodos();
       }
-
-      var displayTodosButton = document.getElementById('display-todos-button');
-      displayTodosButton.addEventListener('click', displayTodos);
 
       var toggleAllButton = document.getElementById('toggle-all-button');
       toggleAllButton.addEventListener('click', toggleAll);
@@ -104,12 +129,9 @@
       var editButton = document.getElementById('edit-button');
       editButton.addEventListener('click', edit);
 
-      var removeButton = document.getElementById('remove-button');
-      removeButton.addEventListener('click', remove);
-
       var toggleButton = document.getElementById('toggle-button');
+      var togglePositionInput = document.getElementById('toggle-position-input');
       toggleButton.addEventListener('click', toggle);
-
 
     </script>
   </body>
