@@ -9,9 +9,6 @@
     <button id="toggle-all-button">Toggle all</button>
     <button id="add-button">Add todo</button>
     <input id="add-input">
-    <button id="edit-button">Edit</button>
-    <input id="edit-position-input">
-    <input id="edit-text-input">
 
 
     <ul id="todos-ul">
@@ -35,12 +32,16 @@
         displayTodos();
       }
 
-      function edit() {
-        var position = editPositionInput.value;
-        var newTodoText = editTextInput.value;
-        todos[position].todoText = newTodoText;
-        editPositionInput.value = '';
-        editTextInput.value = '';
+      function edit(event) {
+        var result = prompt('Edit your todo');
+        var position = event.currentTarget.id.split('-')[1];
+        if (result === null || result === '') {
+          // do nothing
+        }
+        else {
+          var newTodoText = result;
+          todos[position].todoText = newTodoText;
+        }
         displayTodos();
       }
 
@@ -78,22 +79,28 @@
             completedStatus = '[ ] ';
           }
 
-          var removeButton = document.createElement('button');
-          removeButton.innerText = 'Remove';
-
-          var toggleButton = document.createElement('button');
-          toggleButton.innerText = 'Toggle';
 
           todoLi.innerHTML = completedStatus + todos[i].todoText;
           todoListUl.appendChild(todoLi);
-          todoLi.appendChild(toggleButton);
+
+          var removeButton = document.createElement('button');
+          removeButton.innerText = 'Remove';
           todoLi.appendChild(removeButton);
-          
+          removeButton.addEventListener('click', remove);
+          removeButton.id = 'remove-' + i;
+
+          var toggleButton = document.createElement('button');
+          toggleButton.innerText = 'Toggle';
+          todoLi.appendChild(toggleButton);
           toggleButton.addEventListener('click', toggle);
           toggleButton.id = 'toggle-'+i;
 
-          removeButton.addEventListener('click', remove);
-          removeButton.id = 'remove-' + i;
+          var editButton = document.createElement('button');
+          editButton.innerText = 'Edit';
+          todoLi.appendChild(editButton);
+          editButton.addEventListener('click', edit);
+          editButton.id = 'edit-' + i;
+
         }
       }
 
@@ -132,6 +139,7 @@
 
       var editButton = document.getElementById('edit-button');
       editButton.addEventListener('click', edit);
+
 
 
     </script>
